@@ -6,6 +6,8 @@
 #define OPENGL_MATH_H
 
 namespace biz {
+#define PI 3.14159265359
+
     template<typename T>
     struct Vector2 {
         T x, y;
@@ -25,29 +27,29 @@ namespace biz {
             this->y = 0;
         }
 
-        Vector2 operator+(const Vector2 &other) {
+        Vector2 operator +(const Vector2 &other) {
             return Vector2(this->x + other.x, this->y + other.y);
         }
 
-        Vector2 operator-(const Vector2 &other) {
+        Vector2 operator -(const Vector2 &other) {
             return Vector2(this->x - other.x, this->y - other.y);
         }
 
-        Vector2 operator*(const T value) {
+        Vector2 operator *(const T value) {
             return Vector2(this->x * value, this->y * value);
         }
 
-        Vector2 operator/(const T value) {
+        Vector2 operator /(const T value) {
             return Vector2(this->x / value, this->y / value);
         }
 
-        Vector2 &operator=(const Vector2 &other) {
+        Vector2 &operator =(const Vector2 &other) {
             this->x = other.x;
             this->y = other.y;
             return *this;
         }
 
-        bool operator==(const Vector2 &other) {
+        bool operator ==(const Vector2 &other) {
             return (this->x == other.x) && (this->y == other.y);
         }
     };
@@ -77,13 +79,13 @@ namespace biz {
             this->size = other.size;
         }
 
-        Rect&operator =(const Rect &other) {
+        Rect& operator =(const Rect &other) {
             this->position = other.position;
             this->size = other.size;
             return *this;
         }
 
-        bool operator==(const Rect &other) {
+        bool operator ==(const Rect &other) {
             return (this->position == other.position) && (this->size == other.size);
         }
     };

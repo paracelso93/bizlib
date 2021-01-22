@@ -32,6 +32,10 @@ namespace biz {
                 0, 2, 3
         };
 
+        rotation_mat = glm::mat4(1.f);
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
@@ -103,6 +107,16 @@ namespace biz {
                 glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(src_rect.size.x, src_rect.size.y),
         };
 
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+
+        rotation_mat = glm::mat4(1.f);
+        rotation_mat = glm::rotate(rotation_mat, glm::radians(rotation), glm::vec3(0, 0, 1.f));
+        rotation_mat = rotation_mat * center_mat;
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
+        glm::mat4 decenter_mat = glm::mat4(1.f);
+        decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
+        rotation_mat = decenter_mat * rotation_mat;
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -112,9 +126,22 @@ namespace biz {
         glBindVertexArray(0);
     }
 
+    void Texture::rotate(float value) {
+        rotation = value;
+        glm::mat4 mat = glm::mat4(1.f);
+        mat = glm::rotate(mat, glm::radians(value), glm::vec3(0, 0, 1.f));
+
+        rotation_mat = mat;
+        rotation_mat = mat * center_mat;
+        glm::mat4 decenter_mat = glm::mat4(1.f);
+        decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
+        //decenter_mat = glm::inverse(center_mat);
+        rotation_mat = decenter_mat * rotation_mat;
+    }
+
     void Texture::set_path(const std::string &file_path) {
         const char *file = file_path.c_str();
-        image = SOIL_load_image(file, &width, &height, NULL, SOIL_LOAD_RGBA);
+        image = SOIL_load_image(file, &width, &height, nullptr, SOIL_LOAD_RGBA);
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -143,6 +170,7 @@ namespace biz {
         texture_shader->bind();
 
         glUniform1i(texture_shader->get_uniform("texture_sample"), 0);
+        glUniformMatrix4fv(texture_shader->get_uniform("trans"), 1, GL_FALSE, glm::value_ptr(rotation_mat));
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);

@@ -34,7 +34,7 @@ namespace biz {
 
         glGetProgramiv(program, GL_LINK_STATUS, &success);
         if (!success) {
-            glGetProgramInfoLog(program, 512, NULL, infoLog);
+            glGetProgramInfoLog(program, 512, nullptr, infoLog);
             std::cout << "ERROR::LOADSHADERS::COULD_NOT_LINK_PROGRAM" << std::endl;
             std::cout << infoLog << std::endl;
             loadSuccess = false;
@@ -61,8 +61,8 @@ namespace biz {
 
     bool ShaderProgram::load_shader(const std::string &name, GLenum type, GLuint &result) {
         bool load_success = true;
-        std::string temp = "";
-        std::string src = "";
+        std::string temp;
+        std::string src;
         char infoLog[512];
         GLint success;
 
@@ -84,12 +84,12 @@ namespace biz {
 
         result = glCreateShader(type);
         const GLchar *vertSrc = src.c_str();
-        glShaderSource(result, 1, &vertSrc, NULL);
+        glShaderSource(result, 1, &vertSrc, nullptr);
         glCompileShader(result);
 
         glGetShaderiv(result, GL_COMPILE_STATUS, &success);
         if (!success) {
-            glGetShaderInfoLog(result, 512, NULL, infoLog);
+            glGetShaderInfoLog(result, 512, nullptr, infoLog);
             std::cout << "ERROR::LOADSHADERS::COULD_NOT_COMPILE_SHADER" << std::endl;
             if (type == GL_VERTEX_SHADER) {
                 std::cout << "TYPE: VERTEX_SHADER" << std::endl;

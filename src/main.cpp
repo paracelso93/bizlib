@@ -33,6 +33,7 @@ int main() {
     biz::Texture tex;
     tex.set_rect(0, 0, 200, 200, &window);
     tex.set_path("res/images/samuele.png");
+    tex.rotate(50.f);
     //tex.set_src_rect(200, 200, 600, 400);
     biz::Texture tex2;
     tex2.set_rect(300, 200, 300, 200, &window);
@@ -46,8 +47,8 @@ int main() {
 
         window.clear();
         tex.render();
-        tex2.render();
-        rect.render();
+        //tex2.render();
+        //rect.render();
         window.display();
     }
 
