@@ -31,14 +31,11 @@
 *.out
 *.app
 
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
+cmake-build-debug/CMakeCache.txt
+cmake-build-debug/CMakeFiles
+cmake-build-debug/Makefile
+cmake-build-debug/cmake_install.cmake
+cmake-build-debug/opengl
+cmake-build-debug/opengl.cbp
+
+
