@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
-add_executable(opengl main.cpp shader.cpp texture.cpp color_rect.cpp window.cpp biz.cpp)
+add_executable(opengl src/main.cpp src/shader.cpp src/texture.cpp src/color_rect.cpp src/window.cpp src/biz.cpp)
 target_link_libraries(opengl "-framework OpenGL" glfw glew soil2-debug)
