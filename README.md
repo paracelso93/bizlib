@@ -1,7 +1,7 @@
 # bizlib
 Simple C++ 2D library written in OpenGL with glfw.
 
-#Documentation
+# Documentation
 biz::Window base window class,
 <br>biz::Texture base sprite class,
 <br>biz::ColorRect drawable colored rectangle,
@@ -39,11 +39,11 @@ int main() {
 This examples create a red rectangle at position 100, 100 and with a size of 200, 200. It draws it to the screen and, if
 the escape key is pressed, it quits the game.
 
-#Install
-###Windows
+# Install
+### Windows
 work in progress
 
-###MacOS
+### MacOS
 To compile it from source install glfw (https://www.glfw.org), glew (http://glew.sourceforge.net), glm (https://github.com/g-truc/glm) and SOIL2 (https://github.com/SpartanJ/SOIL2).<br>
 Then move to the main directory of the project, create a folder (build) where you can put the compiled source, move to it and run:
 ```$xslt
@@ -52,5 +52,5 @@ make
 ./opengl
 ```
 
-###Linux
+### Linux
 Similar to MacOS, isn't tested yet
