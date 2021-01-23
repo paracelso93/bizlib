@@ -16,6 +16,7 @@ namespace biz {
     public:
         ColorRect(int x, int y, int w, int h, Color color, const Window* window);
         void change_position(int x, int y);
+        void rotate(float value);
         void render();
         static ShaderProgram* color_shader;
     private:
@@ -24,6 +25,10 @@ namespace biz {
         const Window* wnd;
         unsigned int VAO;
         unsigned int VBO;
+        glm::mat4 rotation_mat;
+        glm::mat4 center_mat;
+        Vector2<float> decenter;
+        float rotation;
     };
 }
 

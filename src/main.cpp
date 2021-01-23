@@ -38,7 +38,8 @@ int main() {
     biz::Texture tex2;
     tex2.set_rect(300, 200, 300, 200, &window);
     tex2.set_path("res/images/obama.png");
-    biz::ColorRect rect(100, 100, 200, 200, {255, 0, 0, 255}, &window);
+    biz::ColorRect rect(0, 0, 200, 200, {255, 0, 0, 255}, &window);
+    rect.rotate(10);
     biz::Font arial;
     arial.setup("res/fonts/Arial.ttf", &window);
 
@@ -49,7 +50,7 @@ int main() {
         window.clear();
         //tex.render();
         //tex2.render();
-        //rect.render();
+        rect.render();
         arial.renderText("helloworld", 20.f, 20.f, 1.f, {0, 255, 0, 255});
         window.display();
     }

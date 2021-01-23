@@ -32,6 +32,11 @@ namespace biz {
                 0, 2, 3
         };
 
+        rotation_mat = glm::mat4(1.f);
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
+
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
@@ -54,6 +59,19 @@ namespace biz {
         glBindVertexArray(0);
     }
 
+    void ColorRect::rotate(float value) {
+        rotation = value;
+        glm::mat4 mat = glm::mat4(1.f);
+        mat = glm::rotate(mat, glm::radians(value), glm::vec3(0, 0, 1.f));
+
+        rotation_mat = mat;
+        rotation_mat = mat * center_mat;
+        glm::mat4 decenter_mat = glm::mat4(1.f);
+        decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
+        //decenter_mat = glm::inverse(center_mat);
+        //rotation_mat = decenter_mat * rotation_mat;
+    }
+
     void ColorRect::change_position(int x, int y) {
         this->rectangle.position.x = x;
         this->rectangle.position.y = y;
@@ -69,6 +87,17 @@ namespace biz {
                 glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(1.f, 1.f),
         };
 
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+
+        rotation_mat = glm::mat4(1.f);
+        rotation_mat = glm::rotate(rotation_mat, glm::radians(rotation), glm::vec3(0, 0, 1.f));
+        rotation_mat = rotation_mat * center_mat;
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
+        glm::mat4 decenter_mat = glm::mat4(1.f);
+        decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
+        rotation_mat = decenter_mat * rotation_mat;
+
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -80,6 +109,8 @@ namespace biz {
 
     void ColorRect::render() {
         color_shader->bind();
+
+        glUniformMatrix4fv(color_shader->get_uniform("trans"), 1, GL_FALSE, glm::value_ptr(rotation_mat));
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
