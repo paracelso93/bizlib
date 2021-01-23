@@ -5,6 +5,7 @@
 #include "window.h"
 #include "texture.h"
 #include "color_rect.h"
+#include "font.h"
 
 namespace biz {
     Window::Window(int width, int height, const std::string& title, unsigned int flags) {
@@ -56,6 +57,9 @@ namespace biz {
 
         biz::ColorRect::color_shader = new biz::ShaderProgram();
         biz::ColorRect::color_shader->load(base_path + "bizlib/res/shaders/color_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/color_shader/fragment_core.glsl");
+
+        biz::Font::font_shader = new biz::ShaderProgram();
+        biz::Font::font_shader->load(base_path + "bizlib/res/shaders/font_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/font_shader/fragment_core.glsl");
     }
 
     void Window::clear(Color color) {

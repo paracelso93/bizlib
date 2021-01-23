@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
 
 // GLEW
 #include <GL/glew.h>
@@ -28,5 +29,11 @@
 
 // SOIL2
 #include <SOIL2/SOIL2.h>
+
+// FREETYPE
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
 
 #endif //OPENGL_LIBS_H

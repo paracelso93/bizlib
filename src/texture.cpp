@@ -26,7 +26,6 @@ namespace biz {
                 glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(1.f, 1.f),
         };
 
-
         GLuint indices[] = {
                 0, 1, 2,
                 0, 2, 3

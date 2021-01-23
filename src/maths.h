@@ -89,6 +89,12 @@ namespace biz {
             return (this->position == other.position) && (this->size == other.size);
         }
     };
+
+    static inline int nearest_power(int value, int power) {
+        int start = 1;
+        while (start < value) value *= power;
+        return start;
+    }
 }
 
 #endif //OPENGL_MATH_H

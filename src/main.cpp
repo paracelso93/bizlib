@@ -39,16 +39,18 @@ int main() {
     tex2.set_rect(300, 200, 300, 200, &window);
     tex2.set_path("res/images/obama.png");
     biz::ColorRect rect(100, 100, 200, 200, {255, 0, 0, 255}, &window);
-
+    biz::Font arial;
+    arial.setup("res/fonts/Arial.ttf", &window);
 
     while (!window.should_close()) {
         window.poll_events();
         updateInput(window, tex);
 
         window.clear();
-        tex.render();
+        //tex.render();
         //tex2.render();
         //rect.render();
+        arial.renderText("helloworld", 20.f, 20.f, 1.f, {0, 255, 0, 255});
         window.display();
     }
 

@@ -9,6 +9,7 @@
 #include "color_rect.h"
 #include "texture.h"
 #include "window.h"
+#include "font.h"
 
 namespace biz {
     inline static void Init() {
@@ -31,6 +32,7 @@ namespace biz {
     inline static void Quit() {
         Texture::texture_shader->delete_program();
         ColorRect::color_shader->delete_program();
+        Font::font_shader->delete_program();
         glfwTerminate();
     }
 }
