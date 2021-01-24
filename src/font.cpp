@@ -69,9 +69,16 @@ namespace biz {
 
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
+        glGenBuffers(1, &EBO);
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 6, nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4, nullptr, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        unsigned int indices[] = {
+                0, 1, 2,
+                0, 2, 3
+        };
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6, indices, GL_DYNAMIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, position));
         glEnableVertexAttribArray(0);
 
@@ -80,7 +87,8 @@ namespace biz {
 
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, texcoord));
         glEnableVertexAttribArray(2);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
         return success;
@@ -103,7 +111,7 @@ namespace biz {
             float w = ch.size.x * scale;
             float h = ch.size.y * scale;
 
-            Vertex vertices[6] = {
+            /*Vertex vertices[6] = {
                      glm::vec3((xpos / wnd->width) * 2.f - 1.f,     ((ypos + h) / wnd->height) * 2.f - 1.f,   0.0f), glm::vec3(cf.r, cf.g, cf.b), glm::vec2(0.0f, 0.0f),
                      glm::vec3((xpos / wnd->width) * 2.f - 1.f,     (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),       glm::vec2(0.0f, 1.0f) ,
                      glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),       glm::vec2(1.0f, 1.0f) ,
@@ -111,15 +119,29 @@ namespace biz {
                      glm::vec3((xpos / wnd->width) * 2.f - 1.f,     ((ypos + h) / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),   glm::vec2(0.0f, 0.0f) ,
                      glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),      glm::vec2(1.0f, 1.0f) ,
                      glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, ((ypos + h) / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),   glm::vec2(1.0f, 0.0f)
+            };*/
+            float f_x1 = (static_cast<float>(xpos) / wnd->width) * 2.f - 1.f;
+            float f_y2 = 1.f - (static_cast<float>(ypos - h) / wnd->height) * 2.f;
+            float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
+            float f_y1 = (static_cast<float>(h) / wnd->height) * 2.f * (-1.f) + f_y2;
+
+            Vertex vertices[] = {
+                    glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(0.f, 0.f),
+                    glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(0.f, 1.f),
+                    glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(1.f, 1.f),
+                    glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(1.f, 0.f),
             };
 
             glBindTexture(GL_TEXTURE_2D, ch.textureID);
             glUniform1i(font_shader->get_uniform("text"), 0);
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+            //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+            //glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(indices), indices);
+            //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
             x += (ch.advance >> 6) * scale;
         }

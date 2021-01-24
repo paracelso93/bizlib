@@ -149,9 +149,12 @@ namespace biz {
         void poll_events();
         bool should_close();
         bool is_key_pressed(int key);
+        double get_elapsed_time() const { return fps; }
         int width, height;
     private:
         GLFWwindow* window;
+        std::chrono::time_point<std::chrono::system_clock> time_start;
+        double fps;
     };
 
     inline static void framebuffer_resize_callback(GLFWwindow* window, int fbW, int fbH) {

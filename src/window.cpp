@@ -8,7 +8,7 @@
 #include "font.h"
 
 namespace biz {
-    Window::Window(int width, int height, const std::string& title, unsigned int flags) {
+    Window::Window(int width, int height, const std::string& title, unsigned int flags) : fps(0.0) {
         // create window
         if ((flags & BIZ_WINDOW_RESIZABLE) != 0) {
             glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -75,6 +75,12 @@ namespace biz {
         glBindVertexArray(0);
         glActiveTexture(0);
         glBindTexture(GL_TEXTURE_2D, 0);
+
+        auto new_time = std::chrono::system_clock::now();
+        std::chrono::duration<double> elapsed_time = new_time - time_start;
+        fps = elapsed_time.count();
+        //fps = 1.0 / fps;
+        //std::cout << fps << std::endl;
     }
 
     void Window::close() {
@@ -89,6 +95,8 @@ namespace biz {
 
     void Window::poll_events() {
         glfwPollEvents();
+
+        time_start = std::chrono::system_clock::now();
     }
 
     bool Window::should_close() {

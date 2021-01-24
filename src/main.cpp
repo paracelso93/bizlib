@@ -1,5 +1,4 @@
 #include "biz.h"
-#include "window.h"
 
 
 void updateInput(biz::Window &window, biz::Texture& tex) {
@@ -14,6 +13,7 @@ void updateInput(biz::Window &window, biz::Texture& tex) {
     if (window.is_key_pressed(BIZ_KEY_S)) {
         tex.change_position(tex.get_position().x, tex.get_position().y + 2);
     }
+
     if (window.is_key_pressed(BIZ_KEY_A)) {
         tex.change_position(tex.get_position().x - 2, tex.get_position().y);
     }
@@ -48,10 +48,11 @@ int main() {
         updateInput(window, tex);
 
         window.clear();
-        //tex.render();
-        //tex2.render();
+        tex.render();
+        tex2.render();
         rect.render();
-        arial.renderText("helloworld", 20.f, 20.f, 1.f, {0, 255, 0, 255});
+        arial.renderText("hello world", 0.f, 48.f, 1.f, {0, 255, 0, 255});
+        arial.renderText(std::to_string(static_cast<int>(1.0 / window.get_elapsed_time())), 500.f, 480.f, 1.f, {0, 0, 255, 255});
         window.display();
     }
 
