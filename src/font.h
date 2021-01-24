@@ -18,7 +18,6 @@ namespace biz {
 
     class Font {
     private:
-        glm::mat4 projection;
         std::map<char, Character> characters;
         unsigned int VAO;
         unsigned int VBO;

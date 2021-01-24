@@ -17,7 +17,6 @@ namespace biz {
         float f_y2 = 1.f - (static_cast<float>(y) / wnd->height) * 2.f;
         float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
         float f_y1 = (static_cast<float>(h) / wnd->height) * 2.f * (-1.f) + f_y2;
-        //f_y1 *= -1;
 
         Vertex vertices[] = {
                 glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(0.f, 1.f),
@@ -38,12 +37,10 @@ namespace biz {
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
-        //GLuint VBO;
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
-        //GLuint EBO;
         glGenBuffers(1, &EBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
@@ -168,7 +165,6 @@ namespace biz {
         rotation_mat = mat * center_mat;
         glm::mat4 decenter_mat = glm::mat4(1.f);
         decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
-        //decenter_mat = glm::inverse(center_mat);
         rotation_mat = decenter_mat * rotation_mat;
     }
 

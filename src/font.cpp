@@ -59,13 +59,10 @@ namespace biz {
                     Vector2<int>(font_face->glyph->bitmap_left, font_face->glyph->bitmap_top),
                     static_cast<unsigned int>(font_face->glyph->advance.x)
             };
-            //characters.insert(std::pair<char, Character>(c, character));
             characters[c] = character;
         }
         FT_Done_Face(font_face);
         FT_Done_FreeType(library);
-
-        //projection = glm::ortho(0.0f, static_cast<float>(window->width), 0.0f, static_cast<float>(window->height));
 
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
@@ -87,8 +84,6 @@ namespace biz {
 
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, texcoord));
         glEnableVertexAttribArray(2);
-        //glBindBuffer(GL_ARRAY_BUFFER, 0);
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
         return success;

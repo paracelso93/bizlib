@@ -9,7 +9,6 @@
 
 namespace biz {
     Window::Window(int width, int height, const std::string& title, unsigned int flags) : fps(0.0) {
-        // create window
         if ((flags & BIZ_WINDOW_RESIZABLE) != 0) {
             glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
         } else {
@@ -19,7 +18,7 @@ namespace biz {
         this->height = height;
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (window == nullptr) {
-            std::cout << "ERROR::MAIN.CPP::GLFW_CREATE_WINDOW_FAILED" << std::endl;
+            std::cout << "ERROR::WINDOW::GLFW_CREATE_WINDOW_FAILED" << std::endl;
             glfwTerminate();
         }
         int framebufferWidth = 0, framebufferHeight = 0;
@@ -27,20 +26,18 @@ namespace biz {
             glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
             glViewport(0, 0, framebufferWidth, framebufferHeight);
         } else {
-            // OBAMAPIRAMIDE
             glfwSetFramebufferSizeCallback(window, framebuffer_resize_callback);
         }
 
-        glfwMakeContextCurrent(window); // IMPORTANT
+        glfwMakeContextCurrent(window);
 
         glewExperimental = GL_TRUE;
 
         if (glewInit() != GLEW_OK) {
-            std::cout << "ERROR::MAIN.CPP::GLEW_INIT_FAILED" << std::endl;
+            std::cout << "ERROR::WINDOW::GLEW_INIT_FAILED" << std::endl;
             glfwTerminate();
         }
 
-        // OPTIONS
         //glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
@@ -51,7 +48,6 @@ namespace biz {
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        // TODO: move this crap in create window
         biz::Texture::texture_shader = new biz::ShaderProgram();
         biz::Texture::texture_shader->load(base_path + "bizlib/res/shaders/texture_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/texture_shader/fragment_core.glsl");
 

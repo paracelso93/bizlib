@@ -23,7 +23,6 @@ namespace biz {
             loadSuccess = false;
         }
 
-        // Program
         program = glCreateProgram();
         glAttachShader(program, vertexShader);
         glAttachShader(program, fragmentShader);
@@ -68,7 +67,6 @@ namespace biz {
 
         std::ifstream in_file;
 
-        // Vertex
         in_file.open(name);
 
         if (in_file.is_open()) {
