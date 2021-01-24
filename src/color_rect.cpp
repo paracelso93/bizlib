@@ -16,7 +16,6 @@ namespace biz {
         float f_y2 = 1.f - (static_cast<float>(y) / wnd->height) * 2.f;
         float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
         float f_y1 = (static_cast<float>(h) / wnd->height) * 2.f * (-1.f) + f_y2;
-        //f_y1 *= -1.f;
         ColorFloat c = color.normalize();
 
         Vertex vertices[] = {
@@ -68,8 +67,7 @@ namespace biz {
         rotation_mat = mat * center_mat;
         glm::mat4 decenter_mat = glm::mat4(1.f);
         decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
-        //decenter_mat = glm::inverse(center_mat);
-        //rotation_mat = decenter_mat * rotation_mat;
+        rotation_mat = decenter_mat * rotation_mat;
     }
 
     void ColorRect::change_position(int x, int y) {

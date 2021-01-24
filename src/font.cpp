@@ -23,7 +23,7 @@ namespace biz {
             success = false;
         }
 
-        //FT_Set_Char_Size(font_face, this->height * 64, this->height * 64, 96, 96);
+
         FT_Set_Pixel_Sizes(font_face, 0, 48);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -111,15 +111,6 @@ namespace biz {
             float w = ch.size.x * scale;
             float h = ch.size.y * scale;
 
-            /*Vertex vertices[6] = {
-                     glm::vec3((xpos / wnd->width) * 2.f - 1.f,     ((ypos + h) / wnd->height) * 2.f - 1.f,   0.0f), glm::vec3(cf.r, cf.g, cf.b), glm::vec2(0.0f, 0.0f),
-                     glm::vec3((xpos / wnd->width) * 2.f - 1.f,     (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),       glm::vec2(0.0f, 1.0f) ,
-                     glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),       glm::vec2(1.0f, 1.0f) ,
-
-                     glm::vec3((xpos / wnd->width) * 2.f - 1.f,     ((ypos + h) / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),   glm::vec2(0.0f, 0.0f) ,
-                     glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, (ypos / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),      glm::vec2(1.0f, 1.0f) ,
-                     glm::vec3(((xpos + w) / wnd->width) * 2.f - 1.f, ((ypos + h) / wnd->height) * 2.f - 1.f, 0.0f), glm::vec3(cf.r, cf.g, cf.b),   glm::vec2(1.0f, 0.0f)
-            };*/
             float f_x1 = (static_cast<float>(xpos) / wnd->width) * 2.f - 1.f;
             float f_y2 = 1.f - (static_cast<float>(ypos - h) / wnd->height) * 2.f;
             float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
@@ -136,9 +127,6 @@ namespace biz {
             glUniform1i(font_shader->get_uniform("text"), 0);
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-            //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-            //glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(indices), indices);
-            //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

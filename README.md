@@ -44,7 +44,7 @@ the escape key is pressed, it quits the game.
 work in progress
 
 ### MacOS
-To compile it from source install glfw (https://www.glfw.org), glew (http://glew.sourceforge.net), glm (https://github.com/g-truc/glm) and SOIL2 (https://github.com/SpartanJ/SOIL2).<br>
+To compile it from source install glfw (https://www.glfw.org), glew (http://glew.sourceforge.net), glm (https://github.com/g-truc/glm), SOIL2 (https://github.com/SpartanJ/SOIL2), freetype (https://www.freetype.org) and irrKlang (https://www.ambiera.com/irrklang/).<br>
 Then move to the main directory of the project, create a folder (build) where you can put the compiled source, move to it and run:
 ```$xslt
 cmake ..

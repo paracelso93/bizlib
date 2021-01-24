@@ -84,8 +84,6 @@ namespace biz {
         auto new_time = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_time = new_time - time_start;
         fps = elapsed_time.count();
-        //fps = 1.0 / fps;
-        //std::cout << fps << std::endl;
     }
 
     void Window::close() {

@@ -6,7 +6,6 @@
 #define OPENGL_SOUND_H
 
 #include "libs.h"
-//#pragma comment(lib, "irrKlang.lib")
 
 namespace biz {
 

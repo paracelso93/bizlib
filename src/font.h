@@ -24,8 +24,6 @@ namespace biz {
         unsigned int VBO;
         unsigned int EBO;
         Window* wnd;
-        //FT_BitmapGlyph generate_bitmap(FT_Face face, char c);
-        //void set_texture(const int w, const int h, FT_Bitmap& bitmap, std::vector<unsigned char>& data, Window* window);
     public:
         bool setup(const std::string& file_path, Window* window);
         void renderText(std::string text, float x, float y, float scale, Color color);
