@@ -125,6 +125,40 @@ namespace biz {
         glBindVertexArray(0);
     }
 
+    void Texture::change_size(int new_w, int new_h) {
+        this->rect.size.x = new_w;
+        this->rect.size.y = new_h;
+        float f_x1 = (static_cast<float>(rect.position.x) / wnd->width) * 2.f - 1.f;
+        float f_y2 = 1.f - (static_cast<float>(rect.position.y) / wnd->height) * 2.f;
+        float f_x2 = (static_cast<float>(rect.size.x) / wnd->width) * 2.f + f_x1;
+        float f_y1 = (static_cast<float>(rect.size.y) / wnd->height) * 2.f * (-1.f) + f_y2;
+
+        Vertex vertices[] = {
+                glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(src_rect.position.x, src_rect.size.y),
+                glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(src_rect.position.x, src_rect.position.y),
+                glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(src_rect.size.x, src_rect.position.y),
+                glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(src_rect.size.x, src_rect.size.y),
+        };
+
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+
+        rotation_mat = glm::mat4(1.f);
+        rotation_mat = glm::rotate(rotation_mat, glm::radians(rotation), glm::vec3(0, 0, 1.f));
+        rotation_mat = rotation_mat * center_mat;
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
+        glm::mat4 decenter_mat = glm::mat4(1.f);
+        decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
+        rotation_mat = decenter_mat * rotation_mat;
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, position));
+        glEnableVertexAttribArray(0);
+        glBindVertexArray(0);
+    }
+
     void Texture::rotate(float value) {
         rotation = value;
         glm::mat4 mat = glm::mat4(1.f);
@@ -163,6 +197,10 @@ namespace biz {
         glActiveTexture(0);
         glBindTexture(GL_TEXTURE_2D, 0);
         SOIL_free_image_data(image);
+    }
+
+    Vector2<int> Texture::get_texture_size() {
+        return Vector2<int>(width, height);
     }
 
     void Texture::render() {

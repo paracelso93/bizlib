@@ -24,7 +24,6 @@ void updateInput(biz::Window &window, biz::Texture& tex) {
 }
 
 int main() {
-    // init glfw
     biz::Init();
 
     biz::Window window(640, 480, "BIZ", 0);
@@ -37,8 +36,10 @@ int main() {
     biz::Texture tex2;
     tex2.set_rect(300, 200, 300, 200, &window);
     tex2.set_path("res/images/obama.png");
+    //tex2.change_size(600, 400);
     biz::ColorRect rect(0, 0, 200, 200, {255, 0, 0, 255}, &window);
     rect.rotate(10);
+    //rect.change_size(500, 500);
     biz::Font arial;
     arial.setup("res/fonts/Arial.ttf", &window);
 

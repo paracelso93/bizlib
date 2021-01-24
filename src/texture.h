@@ -31,9 +31,11 @@ namespace biz {
         void set_rect(int x, int y, int w, int h, const Window* window);
         void set_path(const std::string &file_path);
         void set_src_rect(int x, int y, int w, int h);
+        Vector2<int> get_texture_size();
         void render();
         void rotate(float value);
         void change_position(int new_x, int new_y);
+        void change_size(int new_w, int new_h);
         Vector2<int> get_position() const { return rect.position; }
         static ShaderProgram* texture_shader;
     };

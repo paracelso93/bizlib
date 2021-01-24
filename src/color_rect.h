@@ -16,6 +16,7 @@ namespace biz {
     public:
         ColorRect(int x, int y, int w, int h, Color color, const Window* window);
         void change_position(int x, int y);
+        void change_size(int w, int h);
         void rotate(float value);
         void render();
         static ShaderProgram* color_shader;
