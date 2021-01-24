@@ -7,6 +7,7 @@
 
 #include "libs.h"
 #include "color.h"
+#include "sound.h"
 
 enum window_flags : unsigned int {
     BIZ_WINDOW_FULLSCREEN = 1 << 0,

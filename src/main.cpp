@@ -43,6 +43,10 @@ int main() {
     biz::Font arial;
     arial.setup("res/fonts/Arial.ttf", &window);
 
+    biz::Music mus("res/music/good_music.mp3");
+    mus.set_looped(true);
+    mus.play();
+
     while (!window.should_close()) {
         window.poll_events();
         updateInput(window, tex);

@@ -37,4 +37,6 @@
 #include <freetype/ftoutln.h>
 #include <freetype/fttrigon.h>
 
+#include <irrKlang/irrKlang.h>
+
 #endif //OPENGL_LIBS_H

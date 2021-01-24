@@ -60,6 +60,11 @@ namespace biz {
 
         biz::Font::font_shader = new biz::ShaderProgram();
         biz::Font::font_shader->load(base_path + "bizlib/res/shaders/font_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/font_shader/fragment_core.glsl");
+
+        Music::sound_engine = irrklang::createIrrKlangDevice();
+        if (!Music::sound_engine) {
+            std::cout << "ERROR::WINDOW::CREATE_IRRKLANG_DEVICE_FAILED" << std::endl;
+        }
     }
 
     void Window::clear(Color color) {
@@ -88,6 +93,7 @@ namespace biz {
     }
 
     void Window::quit() {
+        Music::sound_engine->drop();
         close();
         glfwDestroyWindow(window);
         glfwTerminate();
