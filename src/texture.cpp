@@ -13,27 +13,19 @@ namespace biz {
         this->rect.position.x = x;
         this->rect.position.y = y;
         this->wnd = window;
-        float f_x1 = (static_cast<float>(x) / wnd->width) * 2.f - 1.f;
-        float f_y2 = 1.f - (static_cast<float>(y) / wnd->height) * 2.f;
-        float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
-        float f_y1 = (static_cast<float>(h) / wnd->height) * 2.f * (-1.f) + f_y2;
+        src_rect.position.x = 0.f;
+        src_rect.position.y = 0.f;
+        src_rect.size.x = 1.f;
+        src_rect.size.y = 1.f;
 
-        Vertex vertices[] = {
-                glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(0.f, 1.f),
-                glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(0.f, 0.f),
-                glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(1.f, 0.f),
-                glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(1.f, 1.f),
-        };
+        Vertex vertices[4];
+        calculate_vertices(vertices);
 
         GLuint indices[] = {
                 0, 1, 2,
                 0, 2, 3
         };
 
-        rotation_mat = glm::mat4(1.f);
-        center_mat = glm::mat4(1.f);
-        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
-        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
@@ -67,17 +59,8 @@ namespace biz {
         src_rect.size.x = u_w;
         src_rect.size.y = u_h;
 
-        float f_x1 = (static_cast<float>(rect.position.x) / wnd->width) * 2.f - 1.f;
-        float f_y2 = 1.f - (static_cast<float>(rect.position.y) / wnd->height) * 2.f;
-        float f_x2 = (static_cast<float>(rect.size.x) / wnd->width) * 2.f + f_x1;
-        float f_y1 = (static_cast<float>(rect.size.y) / wnd->height) * 2.f * (-1.f) + f_y2;
-
-        Vertex vertices[] = {
-                glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(u_x, u_h),
-                glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(u_x, u_y),
-                glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(u_w, u_y),
-                glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(u_w, u_h),
-        };
+        Vertex vertices[4];
+        calculate_vertices(vertices);
 
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -87,29 +70,32 @@ namespace biz {
         glEnableVertexAttribArray(0);
         glBindVertexArray(0);
     }
+    void Texture::calculate_vertices(Vertex vertices[4]) {
+        float f_x1 = (static_cast<float>(this->rect.position.x) / wnd->width) * 2.f - 1.f;
+        float f_y2 = 1.f - (static_cast<float>(this->rect.position.y) / wnd->height) * 2.f;
+        float f_x2 = (static_cast<float>(this->rect.size.x) / wnd->width) * 2.f + f_x1;
+        float f_y1 = (static_cast<float>(this->rect.size.y) / wnd->height) * 2.f * (-1.f) + f_y2;
+
+        vertices[0] = {glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(src_rect.position.x, src_rect.size.y)};
+        vertices[1] = {glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(src_rect.position.x, src_rect.position.y)};
+        vertices[2] = {glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(src_rect.size.x, src_rect.position.y)};
+        vertices[3] = {glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(src_rect.size.x, src_rect.size.y)};
+
+        rotation_mat = glm::mat4(1.f);
+        center_mat = glm::mat4(1.f);
+        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
+        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
+    }
 
     void Texture::change_position(int new_x, int new_y) {
         this->rect.position.x = new_x;
         this->rect.position.y = new_y;
-        float f_x1 = (static_cast<float>(rect.position.x) / wnd->width) * 2.f - 1.f;
-        float f_y2 = 1.f - (static_cast<float>(rect.position.y) / wnd->height) * 2.f;
-        float f_x2 = (static_cast<float>(rect.size.x) / wnd->width) * 2.f + f_x1;
-        float f_y1 = (static_cast<float>(rect.size.y) / wnd->height) * 2.f * (-1.f) + f_y2;
 
-        Vertex vertices[] = {
-                glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(src_rect.position.x, src_rect.size.y),
-                glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(src_rect.position.x, src_rect.position.y),
-                glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(src_rect.size.x, src_rect.position.y),
-                glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(src_rect.size.x, src_rect.size.y),
-        };
+        Vertex vertices[4];
+        calculate_vertices(vertices);
 
-        center_mat = glm::mat4(1.f);
-        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
-
-        rotation_mat = glm::mat4(1.f);
         rotation_mat = glm::rotate(rotation_mat, glm::radians(rotation), glm::vec3(0, 0, 1.f));
         rotation_mat = rotation_mat * center_mat;
-        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
         glm::mat4 decenter_mat = glm::mat4(1.f);
         decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
         rotation_mat = decenter_mat * rotation_mat;
@@ -125,25 +111,12 @@ namespace biz {
     void Texture::change_size(int new_w, int new_h) {
         this->rect.size.x = new_w;
         this->rect.size.y = new_h;
-        float f_x1 = (static_cast<float>(rect.position.x) / wnd->width) * 2.f - 1.f;
-        float f_y2 = 1.f - (static_cast<float>(rect.position.y) / wnd->height) * 2.f;
-        float f_x2 = (static_cast<float>(rect.size.x) / wnd->width) * 2.f + f_x1;
-        float f_y1 = (static_cast<float>(rect.size.y) / wnd->height) * 2.f * (-1.f) + f_y2;
+        Vertex vertices[4];
+        calculate_vertices(vertices);
 
-        Vertex vertices[] = {
-                glm::vec3(f_x1, f_y2, 0.f), glm::vec3(1.f, 0.f, 0.f), glm::vec2(src_rect.position.x, src_rect.size.y),
-                glm::vec3(f_x1, f_y1, 0.f), glm::vec3(0.f, 1.f, 0.f), glm::vec2(src_rect.position.x, src_rect.position.y),
-                glm::vec3(f_x2, f_y1, 0.f), glm::vec3(0.f, 0.f, 1.f), glm::vec2(src_rect.size.x, src_rect.position.y),
-                glm::vec3(f_x2, f_y2, 0.f), glm::vec3(1.f, 1.f, 0.f), glm::vec2(src_rect.size.x, src_rect.size.y),
-        };
 
-        center_mat = glm::mat4(1.f);
-        center_mat = glm::translate(center_mat, glm::vec3(-f_x1 - (f_x2 - f_x1) / 2.f, -f_y1 - (f_y2 - f_y1) / 2.f, 0.f));
-
-        rotation_mat = glm::mat4(1.f);
         rotation_mat = glm::rotate(rotation_mat, glm::radians(rotation), glm::vec3(0, 0, 1.f));
         rotation_mat = rotation_mat * center_mat;
-        decenter = Vector2<float>(f_x1 + (f_x2 - f_x1) / 2.f, f_y1 + (f_y2 - f_y1) / 2.f);
         glm::mat4 decenter_mat = glm::mat4(1.f);
         decenter_mat = glm::translate(decenter_mat, glm::vec3(decenter.x, decenter.y, 0.f));
         rotation_mat = decenter_mat * rotation_mat;
@@ -185,10 +158,7 @@ namespace biz {
         } else {
             std::cout << "ERROR::TEXTURE_LOADING_FAILED" << std::endl;
         }
-        src_rect.position.x = 0.f;
-        src_rect.position.y = 0.f;
-        src_rect.size.x = 1.f;
-        src_rect.size.y = 1.f;
+
 
         glActiveTexture(0);
         glBindTexture(GL_TEXTURE_2D, 0);

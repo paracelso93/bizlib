@@ -21,6 +21,7 @@ namespace biz {
         void render();
         static ShaderProgram* color_shader;
     private:
+        void calculate_vertices(Vertex vertices[4]);
         Rect<int> rectangle;
         Color color;
         const Window* wnd;

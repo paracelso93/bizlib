@@ -27,6 +27,7 @@ namespace biz {
         glm::mat4 center_mat;
         Vector2<float> decenter;
         float rotation;
+        void calculate_vertices(Vertex vertices[4]);
     public:
         void set_rect(int x, int y, int w, int h, const Window* window);
         void set_path(const std::string &file_path);
