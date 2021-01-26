@@ -36,7 +36,7 @@ int main() {
     //rect.rotate(10);
     //rect.change_size(500, 500);
     biz::Font arial;
-    arial.setup("res/fonts/Arial.ttf", &window);
+    arial.setup("res/fonts/Arial.ttf", 48, &window);
 
     biz::Sound mus("res/music/music.wav");
     mus.set_looped(true);

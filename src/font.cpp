@@ -6,7 +6,7 @@
 
 namespace biz {
     ShaderProgram* Font::font_shader = nullptr;
-    bool Font::setup(const std::string& file_path, Window* window) {
+    bool Font::setup(const std::string& file_path, unsigned int size, Window* window) {
         bool success = true;
         wnd = window;
 
@@ -24,7 +24,7 @@ namespace biz {
         }
 
 
-        FT_Set_Pixel_Sizes(font_face, 0, 48);
+        FT_Set_Pixel_Sizes(font_face, 0, size);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         for (unsigned char c = 0; c < 128; c++) {
