@@ -31,6 +31,7 @@ namespace biz {
     public:
         void set_rect(int x, int y, int w, int h, const Window* window);
         void set_path(const std::string &file_path);
+        Texture(int x, int y, int w, int h, const std::string& path, const Window* window);
         void set_src_rect(int x, int y, int w, int h);
         Vector2<int> get_texture_size();
         void render();

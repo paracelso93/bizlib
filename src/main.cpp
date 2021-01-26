@@ -29,21 +29,15 @@ int main() {
     biz::Window window(640, 480, "BIZ", 0);
 
 
-    biz::Texture tex;
-    tex.set_rect(0, 0, 200, 200, &window);
-    tex.set_path("res/images/samuele.png");
-    //tex.rotate(50.f);
-    biz::Texture tex2;
-    tex2.set_rect(300, 200, 300, 200, &window);
-    tex2.set_path("res/images/obama.png");
-    //tex2.change_size(600, 400);
+    biz::Texture tex(0, 0, 200, 200, "res/images/samuele.png", &window);
+    biz::Texture tex2(300, 200, 300, 200, "res/images/obama.png", &window);
     biz::ColorRect rect(0, 0, 200, 200, {255, 0, 0, 255}, &window);
     rect.rotate(10);
     //rect.change_size(500, 500);
     biz::Font arial;
     arial.setup("res/fonts/Arial.ttf", &window);
 
-    biz::Music mus("res/music/music.wav");
+    biz::Sound mus("res/music/music.wav");
     mus.set_looped(true);
     mus.play();
 

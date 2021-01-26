@@ -9,9 +9,9 @@
 
 namespace biz {
 
-    class Music {
+    class Sound {
     public:
-        Music(const std::string& file);
+        Sound(const std::string& file);
         void set_looped(bool loop);
         void play();
         static irrklang::ISoundEngine* sound_engine;
