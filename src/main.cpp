@@ -50,8 +50,8 @@ int main() {
         tex.render();
         tex2.render();
         rect.render();
-        arial.renderText("hello world", 0.f, 48.f, 1.f, {0, 255, 0, 255});
-        arial.renderText(std::to_string(static_cast<int>(1.0 / window.get_elapsed_time())), 500.f, 480.f, 1.f, {0, 0, 255, 255});
+        arial.renderText("hello world", 0, 48, {0, 255, 0, 255});
+        arial.renderText(std::to_string(static_cast<int>(1.0 / window.get_elapsed_time())), 500, 480, {0, 0, 255, 255});
         window.display();
     }
 

@@ -89,7 +89,7 @@ namespace biz {
         return success;
     }
 
-    void Font::renderText(std::string text, float x, float y, float scale, Color color) {
+    void Font::renderText(std::string text, int x, int y, Color color) {
         font_shader->bind();
         ColorFloat cf = color.normalize();
         glUniform3f(font_shader->get_uniform("textColor"), cf.r, cf.g, cf.b);
@@ -100,11 +100,11 @@ namespace biz {
         for (c = text.begin(); c != text.end(); c++) {
             Character ch = characters[*c];
 
-            float x_pos = x + ch.bearing.x * scale;
-            float y_pos = y - (ch.size.y - ch.bearing.y) * scale;
+            float x_pos = x + ch.bearing.x;
+            float y_pos = y - (ch.size.y - ch.bearing.y);
 
-            float w = ch.size.x * scale;
-            float h = ch.size.y * scale;
+            float w = ch.size.x;
+            float h = ch.size.y;
 
             float f_x1 = (static_cast<float>(x_pos) / wnd->width) * 2.f - 1.f;
             float f_y2 = 1.f - (static_cast<float>(y_pos - h) / wnd->height) * 2.f;
@@ -126,7 +126,7 @@ namespace biz {
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-            x += (ch.advance / 64.f) * scale;
+            x += ch.advance / 64;
         }
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);

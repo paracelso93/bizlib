@@ -25,7 +25,7 @@ namespace biz {
         Window* wnd;
     public:
         bool setup(const std::string& file_path, unsigned int size, Window* window);
-        void renderText(std::string text, float x, float y, float scale, Color color);
+        void renderText(std::string text, int x, int y, Color color);
         static ShaderProgram* font_shader;
     };
 }
