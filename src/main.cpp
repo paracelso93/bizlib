@@ -30,6 +30,7 @@ int main() {
 
 
     biz::Texture tex(0, 0, 200, 200, "res/images/samuele.png", &window);
+    //biz::Texture tex(0, 0, BIZ_TEXTURE_SIZE, BIZ_TEXTURE_SIZE, "res/images/samuele.png", &window);
     biz::Texture tex2(300, 200, 300, 200, "res/images/obama.png", &window);
     biz::ColorRect rect(0, 0, 200, 200, {255, 0, 0, 255}, &window);
     //rect.rotate(10);

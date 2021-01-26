@@ -8,8 +8,11 @@ namespace biz {
     ShaderProgram* Texture::texture_shader = nullptr;
 
     Texture::Texture(int x, int y, int w, int h, const std::string& path, const Window* window) {
-        set_rect(x, y, w, h, window);
         set_path(path);
+        int ww = w, hh = h;
+        if (w == BIZ_TEXTURE_SIZE) ww = width;
+        if (h == BIZ_TEXTURE_SIZE) hh = height;
+        set_rect(x, y, ww, hh, window);
     }
 
     void Texture::set_rect(int x, int y, int w, int h, const Window* window) {

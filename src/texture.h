@@ -11,6 +11,7 @@
 #include "window.h"
 
 namespace biz {
+#define BIZ_TEXTURE_SIZE -1
     class Texture {
     private:
         GLuint VAO;
