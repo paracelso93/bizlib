@@ -2,12 +2,10 @@
 // Created by edoardo biasio on 2021-01-21.
 //
 
-#ifndef OPENGL_MATH_H
-#define OPENGL_MATH_H
+#ifndef OPENGL_MATHS_H
+#define OPENGL_MATHS_H
 
 namespace biz {
-#define PI 3.14159265359
-
     template<typename T>
     struct Vector2 {
         T x, y;
@@ -89,12 +87,6 @@ namespace biz {
             return (this->position == other.position) && (this->size == other.size);
         }
     };
-
-    static inline int nearest_power(int value, int power) {
-        int start = 1;
-        while (start < value) value *= power;
-        return start;
-    }
 }
 
-#endif //OPENGL_MATH_H
+#endif //OPENGL_MATHS_H

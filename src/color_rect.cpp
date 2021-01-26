@@ -11,6 +11,9 @@ namespace biz {
         this->rectangle = Rect<int>(x, y, w, h);
         this->color = color;
         this->wnd = window;
+        this->VAO = 0;
+        this->VBO = 0;
+        this->rotation = 0.f;
 
         Vertex vertices[4];
         calculate_vertices(vertices);
@@ -122,7 +125,7 @@ namespace biz {
         glUniformMatrix4fv(color_shader->get_uniform("trans"), 1, GL_FALSE, glm::value_ptr(rotation_mat));
 
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         glBindVertexArray(0);
         color_shader->unbind();

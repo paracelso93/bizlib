@@ -32,7 +32,7 @@ int main() {
     biz::Texture tex(0, 0, 200, 200, "res/images/samuele.png", &window);
     biz::Texture tex2(300, 200, 300, 200, "res/images/obama.png", &window);
     biz::ColorRect rect(0, 0, 200, 200, {255, 0, 0, 255}, &window);
-    rect.rotate(10);
+    //rect.rotate(10);
     //rect.change_size(500, 500);
     biz::Font arial;
     arial.setup("res/fonts/Arial.ttf", &window);

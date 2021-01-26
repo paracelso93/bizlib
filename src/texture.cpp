@@ -161,7 +161,7 @@ namespace biz {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glGenerateMipmap(GL_TEXTURE_2D);
         } else {
-            std::cout << "ERROR::TEXTURE_LOADING_FAILED" << std::endl;
+            std::cout << "ERROR::TEXTURE.CPP::SET_PATH::TEXTURE_LOADING_FAILED" << std::endl;
         }
 
 
@@ -184,7 +184,7 @@ namespace biz {
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         glBindVertexArray(0);
         texture_shader->unbind();

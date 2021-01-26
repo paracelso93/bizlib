@@ -2,8 +2,8 @@
 // Created by edoardo biasio on 2021-01-22.
 //
 
-#ifndef OPENGL_GLYPH_H
-#define OPENGL_GLYPH_H
+#ifndef OPENGL_FONT_H
+#define OPENGL_FONT_H
 
 #include "texture.h"
 #include "maths.h"
@@ -30,4 +30,4 @@ namespace biz {
     };
 }
 
-#endif //OPENGL_GLYPH_H
+#endif //OPENGL_FONT_H

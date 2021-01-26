@@ -34,7 +34,7 @@ namespace biz {
         glGetProgramiv(program, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(program, 512, nullptr, infoLog);
-            std::cout << "ERROR::LOADSHADERS::COULD_NOT_LINK_PROGRAM" << std::endl;
+            std::cout << "ERROR::SHADER.CPP::LOAD::COULD_NOT_LINK_PROGRAM" << std::endl;
             std::cout << infoLog << std::endl;
             loadSuccess = false;
         }
@@ -74,7 +74,7 @@ namespace biz {
                 src += temp + "\n";
             }
         } else {
-            std::cout << "ERROR::LOADSHADER::COULD_NOT_OPEN_FILE" << std::endl;
+            std::cout << "ERROR::SHADER.CPP::LOAD_SHADER::COULD_NOT_OPEN_FILE" << std::endl;
             load_success = false;
         }
 
@@ -88,7 +88,7 @@ namespace biz {
         glGetShaderiv(result, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(result, 512, nullptr, infoLog);
-            std::cout << "ERROR::LOADSHADERS::COULD_NOT_COMPILE_SHADER" << std::endl;
+            std::cout << "ERROR::SHADER.CPP::LOAD_SHADER::COULD_NOT_COMPILE_SHADER" << std::endl;
             if (type == GL_VERTEX_SHADER) {
                 std::cout << "TYPE: VERTEX_SHADER" << std::endl;
             } else {

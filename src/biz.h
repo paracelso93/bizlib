@@ -15,7 +15,7 @@ namespace biz {
     inline static void Init() {
 
         if (glfwInit() != GLFW_TRUE) {
-            std::cout << "ERROR::MAIN.CPP::GLFW_INIT_FAILED" << std::endl;
+            std::cout << "ERROR::BIZ.H::INIT::GLFW_INIT_FAILED" << std::endl;
             glfwTerminate();
         }
 

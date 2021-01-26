@@ -12,7 +12,7 @@ namespace biz {
 
         FT_Library library;
         if (FT_Init_FreeType(&library)) {
-            std::cout << "FONT::SETUP::FT_INIT_FREETYPE_FAILED" << std::endl;
+            std::cout << "ERROR::FONT.CPP::SETUP::FT_INIT_FREETYPE_FAILED" << std::endl;
             success = false;
         }
 
@@ -28,8 +28,8 @@ namespace biz {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         for (unsigned char c = 0; c < 128; c++) {
-            if (FT_Load_Char(font_face, c, FT_LOAD_RENDER)) {
-                std::cout << "ERROR::FREETYPE::FAILED_TO_LOAD_GLYPH" << std::endl;
+            if (FT_Load_Char(font_face, c, static_cast<unsigned int>(FT_LOAD_RENDER))) {
+                std::cout << "ERROR::FONT.CPP::SETUP::FAILED_TO_LOAD_GLYPH" << std::endl;
                 success = false;
                 continue;
             }
@@ -100,14 +100,14 @@ namespace biz {
         for (c = text.begin(); c != text.end(); c++) {
             Character ch = characters[*c];
 
-            float xpos = x + ch.bearing.x * scale;
-            float ypos = y - (ch.size.y - ch.bearing.y) * scale;
+            float x_pos = x + ch.bearing.x * scale;
+            float y_pos = y - (ch.size.y - ch.bearing.y) * scale;
 
             float w = ch.size.x * scale;
             float h = ch.size.y * scale;
 
-            float f_x1 = (static_cast<float>(xpos) / wnd->width) * 2.f - 1.f;
-            float f_y2 = 1.f - (static_cast<float>(ypos - h) / wnd->height) * 2.f;
+            float f_x1 = (static_cast<float>(x_pos) / wnd->width) * 2.f - 1.f;
+            float f_y2 = 1.f - (static_cast<float>(y_pos - h) / wnd->height) * 2.f;
             float f_x2 = (static_cast<float>(w) / wnd->width) * 2.f + f_x1;
             float f_y1 = (static_cast<float>(h) / wnd->height) * 2.f * (-1.f) + f_y2;
 
@@ -126,7 +126,7 @@ namespace biz {
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-            x += (ch.advance >> 6) * scale;
+            x += (ch.advance / 64.f) * scale;
         }
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);

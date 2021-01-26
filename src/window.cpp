@@ -18,7 +18,7 @@ namespace biz {
         this->height = height;
         window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (window == nullptr) {
-            std::cout << "ERROR::WINDOW::GLFW_CREATE_WINDOW_FAILED" << std::endl;
+            std::cout << "ERROR::WINDOW.CPP::WINDOW::GLFW_CREATE_WINDOW_FAILED" << std::endl;
             glfwTerminate();
         }
         int framebufferWidth = 0, framebufferHeight = 0;
@@ -34,7 +34,7 @@ namespace biz {
         glewExperimental = GL_TRUE;
 
         if (glewInit() != GLEW_OK) {
-            std::cout << "ERROR::WINDOW::GLEW_INIT_FAILED" << std::endl;
+            std::cout << "ERROR::WINDOW.CPP::WINDOW::GLEW_INIT_FAILED" << std::endl;
             glfwTerminate();
         }
 
@@ -59,14 +59,14 @@ namespace biz {
 
         Sound::sound_engine = irrklang::createIrrKlangDevice();
         if (!Sound::sound_engine) {
-            std::cout << "ERROR::WINDOW::CREATE_IRRKLANG_DEVICE_FAILED" << std::endl;
+            std::cout << "ERROR::WINDOW.CPP::WINDOW::CREATE_IRRKLANG_DEVICE_FAILED" << std::endl;
         }
     }
 
     void Window::clear(Color color) {
         ColorFloat f = color.normalize();
         glClearColor(f.r, f.g, f.b, f.a);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        glClear(static_cast<unsigned int>(GL_COLOR_BUFFER_BIT) | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     }
 
     void Window::display() {
