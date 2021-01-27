@@ -6,21 +6,18 @@
 
 namespace biz {
     ShaderProgram* Font::font_shader = nullptr;
-    bool Font::setup(const std::string& file_path, unsigned int size, Window* window) {
-        bool success = true;
+    Font::Font(const std::string& file_path, unsigned int size, Window* window) {
         wnd = window;
 
         FT_Library library;
         if (FT_Init_FreeType(&library)) {
             std::cout << "ERROR::FONT.CPP::SETUP::FT_INIT_FREETYPE_FAILED" << std::endl;
-            success = false;
         }
 
         FT_Face font_face;
 
         if (FT_New_Face(library, file_path.c_str(), 0, &font_face)) {
             std::cout << "FONT::SETUP::FT_NEW_FACE_FAILED" << std::endl;
-            success = false;
         }
 
 
@@ -30,7 +27,6 @@ namespace biz {
         for (unsigned char c = 0; c < 128; c++) {
             if (FT_Load_Char(font_face, c, static_cast<unsigned int>(FT_LOAD_RENDER))) {
                 std::cout << "ERROR::FONT.CPP::SETUP::FAILED_TO_LOAD_GLYPH" << std::endl;
-                success = false;
                 continue;
             }
 
@@ -85,8 +81,6 @@ namespace biz {
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *) offsetof(Vertex, texcoord));
         glEnableVertexAttribArray(2);
         glBindVertexArray(0);
-
-        return success;
     }
 
     void Font::renderText(std::string text, int x, int y, Color color) {

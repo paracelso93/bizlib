@@ -16,7 +16,11 @@ namespace biz {
         }
         this->width = width;
         this->height = height;
-        window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        if ((flags & BIZ_WINDOW_FULLSCREEN) != 0) {
+            window = glfwCreateWindow(width, height, title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+        } else {
+            window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        }
         if (window == nullptr) {
             std::cout << "ERROR::WINDOW.CPP::WINDOW::GLFW_CREATE_WINDOW_FAILED" << std::endl;
             glfwTerminate();
@@ -48,14 +52,14 @@ namespace biz {
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        biz::Texture::texture_shader = new biz::ShaderProgram();
-        biz::Texture::texture_shader->load(base_path + "bizlib/res/shaders/texture_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/texture_shader/fragment_core.glsl");
+        Texture::texture_shader = new ShaderProgram();
+        Texture::texture_shader->load(base_path + "bizlib/res/shaders/texture_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/texture_shader/fragment_core.glsl");
 
-        biz::ColorRect::color_shader = new biz::ShaderProgram();
-        biz::ColorRect::color_shader->load(base_path + "bizlib/res/shaders/color_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/color_shader/fragment_core.glsl");
+        ColorRect::color_shader = new ShaderProgram();
+        ColorRect::color_shader->load(base_path + "bizlib/res/shaders/color_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/color_shader/fragment_core.glsl");
 
-        biz::Font::font_shader = new biz::ShaderProgram();
-        biz::Font::font_shader->load(base_path + "bizlib/res/shaders/font_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/font_shader/fragment_core.glsl");
+        Font::font_shader = new ShaderProgram();
+        Font::font_shader->load(base_path + "bizlib/res/shaders/font_shader/vertex_core.glsl", base_path + "bizlib/res/shaders/font_shader/fragment_core.glsl");
 
         Sound::sound_engine = irrklang::createIrrKlangDevice();
         if (!Sound::sound_engine) {
